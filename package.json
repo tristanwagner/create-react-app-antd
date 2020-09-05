@@ -1,6 +1,6 @@
 {
   "name": "create-react-app-antd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "create-react-app-antd": "index.js"
   },
