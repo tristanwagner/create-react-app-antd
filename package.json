@@ -1,6 +1,6 @@
 {
   "name": "create-react-app-antd",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bin": {
     "create-react-app-antd": "index.js"
   },
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tristanwagner/create-react-app-antd-cli.git"
+    "url": "https://github.com/tristanwagner/create-react-app-antd.git"
   },
   "keywords": [],
   "author": "Tristan WAGNER <t.wagner66250@gmail.com>",
