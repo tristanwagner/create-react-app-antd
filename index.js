@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const { spawn } = require('child_process');
+const fs = require('fs');
 
 const name = process.argv[2];
 if (!name || name.match(/[<>:"\/\\|?*\x00-\x1F]/)) {
@@ -10,14 +11,28 @@ if (!name || name.match(/[<>:"\/\\|?*\x00-\x1F]/)) {
 `);
 }
 
+const platform = /^win/.test(process.platform) ? 'win' : 'unix'
+
 const repoURL = 'https://github.com/ant-design/create-react-app-antd.git';
 
-runCommand('git', ['clone', repoURL, name])
+const gitDir = `${name}${platform === 'win'? '\\' : '/'}.git`;
+
+const commands = {
+  git: ['git', ['clone', repoURL, name]],
+  rm: platform === 'win' ? ['cmd', ['/c', 'rmdir', '/s', '/q', gitDir]] : ['rm', ['-rf', gitDir]],
+  npm: [platform === 'win' ? 'npm.cmd' : 'npm', ['install']]
+};
+
+runCommand(...commands.git)
   .then(() => {
-    return runCommand('rm', ['-rf', `${name}/.git`]);
+    if (fs.existsSync(gitDir)) {
+      return runCommand(...commands.rm);
+    } else {
+      return Promise.resolve();
+    }
   }).then(() => {
     console.log('Installing dependencies...');
-    return runCommand(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['install'], {
+    return runCommand(...commands.npm, {
       cwd: process.cwd() + '/' + name
     });
   }).then(() => {
