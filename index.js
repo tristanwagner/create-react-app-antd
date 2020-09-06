@@ -9,7 +9,7 @@ const helpMessage = `
   Usage: create-react-app-antd <options> <app-name>
 
   Options
-  -y|--y|-yank|--yank     Use yarn instead of npm.
+  -y|--y|-yarn|--yarn     Use yarn instead of npm.
   -h|-help|--h|--help     Display this message.`;
 
 if (args.find(arg => arg.match(/^(-|--)(h|help)$/))) {
